@@ -1,0 +1,58 @@
+doctype html
+html(xmlns='http://www.w3.org/1999/xhtml')
+    head
+        meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        // normalize.css contents must be inlined to newsletter
+        link(href='normalize.css', rel='stylesheet')
+        link(href='extra.css', rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Roboto:400,700'  rel='stylesheet')
+        style.
+            body * {
+                font-family: Roboto;
+                font-weight: normal;
+            }
+
+            table {
+                margin: 1em 0em;
+            }
+
+            .heading {
+                font-size: 2em;
+                text-align: center;
+            }
+
+            .center {
+                margin: 0 auto;
+                text-align: left;
+            }
+
+            .alignTextCenter {
+                text-align: center;
+            }
+            .bold{
+                font-weight: bold;
+            }
+
+            /* Put extra.css contents here */
+        //if (gte mso 9)|(IE)
+          link(href='outlook.css', rel='stylesheet')
+          |         /* Put outlook.css contents here */
+        // Left title element empty to prevent viewing this text in subject line on Android 4 email clients
+        title
+    body.body
+        .webkit
+            // An example of bulletproof container with limited row length
+            table(width='100%', border='0', cellpadding='0', cellspacing='0')
+                tr
+                    // Add here this element
+                    // <th></th>
+                    // to align container to center
+                    th.heading Your heading
+                        // Content here
+                        // You can use any HTML code which you prefer
+
+
+            table(width = "60%", margin = "0 auto", cellpadding = "0", cellspacing="0").center
+

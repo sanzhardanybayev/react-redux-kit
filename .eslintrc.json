@@ -1,0 +1,20 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "linebreak-style": [
+      "error",
+      "windows"
+    ],
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
+    "arrow-body-style": "off",
+    "react/no-unescaped-entities": 0,
+    "padded-blocks": "off"
+  },
+  "globals": {
+    "window": true,
+    "document": true
+  }
+}
