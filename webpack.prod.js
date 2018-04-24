@@ -1,15 +1,29 @@
 const webpack = require('webpack');
 const path = require('path');
 
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production')
 };
 
+
 const config = {
+  mode: 'production',
   devtool: 'source-map',
   entry: {
     index: [path.resolve(__dirname, 'src/index')]
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all"
+        }
+      }
+    }
   },
   target: 'web',
   output: {
@@ -22,12 +36,24 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin(GLOBALS),
-    new webpack.optimize.UglifyJsPlugin()
+
+    new UglifyJsPlugin({
+      test: /\.(js|jsx)($|\?)/i,
+      cache: true,
+      sourceMap: true,
+      uglifyOptions:{
+        ecma: 8,
+        warnings: false,
+        ie8: true,
+        safari10: true
+      }
+    }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         include: path.resolve(__dirname, 'src/'),
         use: {
           loader: 'babel-loader',
@@ -93,14 +119,20 @@ const config = {
         use: 'url-loader?limit=10000&mimetype=application/octet-stream'
       },
       {
-        test: /\.(png|jpg)$/,
-        exclude: /node_modules/,
-        loader: 'url-loader?limit=1000000'
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        use: 'url-loader?limit=10000&mimetype=application/octet-stream'
       },
       {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        exclude: path.resolve(__dirname, 'src/assets/images/features'),
-        use: 'url-loader?limit=10000&mimetype=image/svg+xml'
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        use: 'url-loader?limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        use: 'url-loader?limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /\.(png|jpg|ico|svg|gif)$/,
+        loader: 'url-loader?limit=1000000'
       }
     ]
 

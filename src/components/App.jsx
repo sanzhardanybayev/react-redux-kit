@@ -1,42 +1,38 @@
-import 'normalize.css';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import ToTopButton from './common/toTopButton';
+import 'normalize.css'
+import React from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Loadable from 'react-loadable'
+import { CircularProgress } from 'material-ui/Progress'
+
+import ToTopButton from './common/toTopButton'
+
+const TopClassLoadable = Loadable({
+  loader: () => import('./TopClass'),
+  loading() {
+    return <CircularProgress />
+  }
+})
 
 class App extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
   }
 
 
   render() {
     return (
-      <div >
-        <h1 >Hello World, this is {this.props.topClass.companyName} </h1 >
-        <h3 >It's {(new Date()).toString()} </h3 >
-        <ToTopButton />
-      </div >
-    );
+      <Router >
+        <Switch >
+          <Route exact path="/" component={TopClassLoadable} />
+          <Route exact path="/rahim" component={TopClassLoadable} />
+          <ToTopButton/>
+        </Switch >
+      </Router >
+
+    )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    topClass: state.topClass
-  };
-};
 
-App.defaultProps = {
-  topClass: {
-    companyName: 'TopClass'
-  }
-};
-
-App.propTypes = {
-  topClass: PropTypes.string
-};
-
-
-export default connect(mapStateToProps)(App);
+export default App
